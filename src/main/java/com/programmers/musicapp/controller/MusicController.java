@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 import com.programmers.musicapp.dto.request.MusicCreateRequest;
+import com.programmers.musicapp.dto.request.MusicUpdateRequest;
 import com.programmers.musicapp.dto.response.MusicResponse;
 import com.programmers.musicapp.dto.response.ResponseWrapper;
 import com.programmers.musicapp.service.MusicService;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -40,8 +42,15 @@ public class MusicController {
     }
 
     @GetMapping("/{musicId}")
-    public ResponseWrapper<MusicResponse> findMusicById(@PathVariable int musicId) {
+    public ResponseWrapper<MusicResponse> findMusicById(@PathVariable long musicId) {
         MusicResponse response = musicService.findMusicById(musicId);
+
+        return ResponseWrapper.of(OK.value(), "success", response);
+    }
+
+    @PutMapping("/{musicId}")
+    public ResponseWrapper<MusicResponse> update(@PathVariable long musicId, @RequestBody MusicUpdateRequest request) {
+        MusicResponse response = musicService.update(musicId, request);
 
         return ResponseWrapper.of(OK.value(), "success", response);
     }

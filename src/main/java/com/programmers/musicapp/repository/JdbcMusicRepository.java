@@ -9,7 +9,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -43,7 +42,7 @@ public class JdbcMusicRepository implements MusicRepository {
     }
 
     @Override
-    public Optional<Music> findMusicById(int musicId) {
+    public Optional<Music> findMusicById(long musicId) {
         String sql = "select * from music where id = :musicId";
         Map<String, Object> parameterSource = Map.of("musicId", musicId);
 
@@ -56,7 +55,18 @@ public class JdbcMusicRepository implements MusicRepository {
         }
     }
 
-    private SqlParameterSource getParameterSource(Music music) {
+    @Override
+    public Music update(Music music) {
+        String sql = "update music set title = :title, poster_url = :posterUrl, description = :description, artist_name = :artistName, "
+                + "released_date = :releasedDate, created_datetime = :createdDatetime, updated_datetime = :updatedDatetime where id = :musicId";
+        MapSqlParameterSource parameterSource = getParameterSource(music).addValue("musicId", music.getId());
+
+        template.update(sql, parameterSource);
+
+        return music;
+    }
+
+    private MapSqlParameterSource getParameterSource(Music music) {
         return new MapSqlParameterSource()
                 .addValue("title", music.getTitle())
                 .addValue("posterUrl", music.getPosterUrl())

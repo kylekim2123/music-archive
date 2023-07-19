@@ -10,5 +10,7 @@ public interface MusicRepository {
 
     List<Music> findAllMusics();
 
-    Optional<Music> findMusicById(int musicId);
+    Optional<Music> findMusicById(long musicId);
+
+    Music update(Music music);
 }
