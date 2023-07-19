@@ -13,4 +13,6 @@ public interface MusicRepository {
     Optional<Music> findMusicById(long musicId);
 
     Music update(Music music);
+
+    void deleteById(long musicId);
 }

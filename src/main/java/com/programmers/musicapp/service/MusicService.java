@@ -40,6 +40,11 @@ public class MusicService {
         return MusicResponse.fromEntity(updatedMusic);
     }
 
+    public void deleteById(long musicId) {
+        getMusicOrThrow(musicId);
+        musicRepository.deleteById(musicId);
+    }
+
     private Music getMusicOrThrow(long musicId) {
         return musicRepository.findMusicById(musicId)
                 .orElseThrow(() -> new IllegalArgumentException("ID에 해당하는 음악이 없습니다."));

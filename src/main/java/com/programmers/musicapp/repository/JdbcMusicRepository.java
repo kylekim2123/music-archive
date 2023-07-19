@@ -44,10 +44,9 @@ public class JdbcMusicRepository implements MusicRepository {
     @Override
     public Optional<Music> findMusicById(long musicId) {
         String sql = "select * from music where id = :musicId";
-        Map<String, Object> parameterSource = Map.of("musicId", musicId);
 
         try {
-            Music music = template.queryForObject(sql, parameterSource, getMusicRowMapper());
+            Music music = template.queryForObject(sql, getMusicIdMap(musicId), getMusicRowMapper());
 
             return Optional.of(music);
         } catch (EmptyResultDataAccessException e) {
@@ -64,6 +63,17 @@ public class JdbcMusicRepository implements MusicRepository {
         template.update(sql, parameterSource);
 
         return music;
+    }
+
+    @Override
+    public void deleteById(long musicId) {
+        String sql = "delete from music where id = :musicId";
+
+        template.update(sql, getMusicIdMap(musicId));
+    }
+
+    private Map<String, Object> getMusicIdMap(long musicId) {
+        return Map.of("musicId", musicId);
     }
 
     private MapSqlParameterSource getParameterSource(Music music) {

@@ -1,6 +1,7 @@
 package com.programmers.musicapp.controller;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
 import com.programmers.musicapp.dto.request.MusicCreateRequest;
@@ -10,6 +11,7 @@ import com.programmers.musicapp.dto.response.ResponseWrapper;
 import com.programmers.musicapp.service.MusicService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,5 +55,11 @@ public class MusicController {
         MusicResponse response = musicService.update(musicId, request);
 
         return ResponseWrapper.of(OK.value(), "success", response);
+    }
+
+    @DeleteMapping("/{musicId}")
+    @ResponseStatus(NO_CONTENT)
+    public void deleteById(@PathVariable long musicId) {
+        musicService.deleteById(musicId);
     }
 }
