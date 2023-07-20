@@ -27,7 +27,7 @@ public class MusicUpdateRequest {
                 .artistName(artistName)
                 .releasedDate(releasedDate)
                 .createdDatetime(createdDatetime)
-                .updatedDateTime(nowDateTime)
+                .updatedDatetime(nowDateTime)
                 .build();
     }
 }

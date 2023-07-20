@@ -4,8 +4,10 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
+import com.programmers.musicapp.dto.request.CommentCreateRequest;
 import com.programmers.musicapp.dto.request.MusicCreateRequest;
 import com.programmers.musicapp.dto.request.MusicUpdateRequest;
+import com.programmers.musicapp.dto.response.CommentResponse;
 import com.programmers.musicapp.dto.response.MusicResponse;
 import com.programmers.musicapp.dto.response.ResponseWrapper;
 import com.programmers.musicapp.service.MusicService;
@@ -61,5 +63,13 @@ public class MusicController {
     @ResponseStatus(NO_CONTENT)
     public void deleteById(@PathVariable long musicId) {
         musicService.deleteById(musicId);
+    }
+
+    @PostMapping("/{musicId}/comments")
+    @ResponseStatus(CREATED)
+    public ResponseWrapper<CommentResponse> createComment(@PathVariable long musicId, @RequestBody CommentCreateRequest request) {
+        CommentResponse response = musicService.createComment(musicId, request);
+
+        return ResponseWrapper.of(CREATED.value(), "success", response);
     }
 }

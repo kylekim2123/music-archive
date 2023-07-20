@@ -1,9 +1,13 @@
 package com.programmers.musicapp.service;
 
+import com.programmers.musicapp.dto.request.CommentCreateRequest;
 import com.programmers.musicapp.dto.request.MusicCreateRequest;
 import com.programmers.musicapp.dto.request.MusicUpdateRequest;
+import com.programmers.musicapp.dto.response.CommentResponse;
 import com.programmers.musicapp.dto.response.MusicResponse;
+import com.programmers.musicapp.entity.Comment;
 import com.programmers.musicapp.entity.Music;
+import com.programmers.musicapp.repository.CommentRepository;
 import com.programmers.musicapp.repository.MusicRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class MusicService {
 
     private final MusicRepository musicRepository;
+    private final CommentRepository commentRepository;
 
     public MusicResponse create(MusicCreateRequest request) {
         Music music = musicRepository.save(request.toEntity());
@@ -43,6 +48,12 @@ public class MusicService {
     public void deleteById(long musicId) {
         getMusicOrThrow(musicId);
         musicRepository.deleteById(musicId);
+    }
+
+    public CommentResponse createComment(long musicId, CommentCreateRequest request) {
+        Comment comment = commentRepository.save(request.toEntity(musicId));
+
+        return CommentResponse.fromEntity(comment);
     }
 
     private Music getMusicOrThrow(long musicId) {

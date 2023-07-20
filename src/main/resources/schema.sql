@@ -1,4 +1,5 @@
 DROP TABLE music IF EXISTS;
+DROP TABLE comment IF EXISTS;
 
 CREATE TABLE music
 (
@@ -10,4 +11,14 @@ CREATE TABLE music
     released_date    DATE         NOT NULL,
     created_datetime DATETIME DEFAULT NULL,
     updated_datetime DATETIME DEFAULT NULL
+);
+
+CREATE TABLE comment
+(
+    id               BIGINT PRIMARY KEY AUTO_INCREMENT,
+    music_id         BIGINT       NOT NULL,
+    description      VARCHAR(500) NOT NULL,
+    created_datetime DATETIME DEFAULT NULL,
+    updated_datetime DATETIME DEFAULT NULL,
+    FOREIGN KEY (music_id) REFERENCES music (id) ON DELETE CASCADE
 );

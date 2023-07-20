@@ -17,7 +17,7 @@ public class MusicResponse {
     private String artistName;
     private LocalDate releasedDate;
     private LocalDateTime createdDatetime;
-    private LocalDateTime updatedDateTime;
+    private LocalDateTime updatedDatetime;
 
     public static MusicResponse fromEntity(Music music) {
         return MusicResponse.builder()
@@ -28,7 +28,7 @@ public class MusicResponse {
                 .artistName(music.getArtistName())
                 .releasedDate(music.getReleasedDate())
                 .createdDatetime(music.getCreatedDatetime())
-                .updatedDateTime(music.getUpdatedDateTime())
+                .updatedDatetime(music.getUpdatedDatetime())
                 .build();
     }
 }

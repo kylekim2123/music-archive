@@ -84,7 +84,7 @@ public class JdbcMusicRepository implements MusicRepository {
                 .addValue("artistName", music.getArtistName())
                 .addValue("releasedDate", music.getReleasedDate())
                 .addValue("createdDatetime", music.getCreatedDatetime())
-                .addValue("updatedDatetime", music.getUpdatedDateTime());
+                .addValue("updatedDatetime", music.getUpdatedDatetime());
     }
 
     private RowMapper<Music> getMusicRowMapper() {
@@ -96,7 +96,7 @@ public class JdbcMusicRepository implements MusicRepository {
                 .artistName(resultSet.getString("artist_name"))
                 .releasedDate(resultSet.getDate("released_date").toLocalDate())
                 .createdDatetime(resultSet.getTimestamp("created_datetime").toLocalDateTime())
-                .updatedDateTime(resultSet.getTimestamp("updated_datetime").toLocalDateTime())
+                .updatedDatetime(resultSet.getTimestamp("updated_datetime").toLocalDateTime())
                 .build());
     }
 }
