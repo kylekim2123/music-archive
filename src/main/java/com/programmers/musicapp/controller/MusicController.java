@@ -72,4 +72,11 @@ public class MusicController {
 
         return ResponseWrapper.of(CREATED.value(), "success", response);
     }
+
+    @GetMapping("/{musicId}/comments")
+    public ResponseWrapper<List<CommentResponse>> findCommentsByMusicId(@PathVariable long musicId) {
+        List<CommentResponse> response = musicService.findCommentsByMusicId(musicId);
+
+        return ResponseWrapper.of(OK.value(), "success", response);
+    }
 }

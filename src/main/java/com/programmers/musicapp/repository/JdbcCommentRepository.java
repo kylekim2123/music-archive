@@ -1,7 +1,10 @@
 package com.programmers.musicapp.repository;
 
 import com.programmers.musicapp.entity.Comment;
+import java.util.List;
+import java.util.Map;
 import javax.sql.DataSource;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -29,11 +32,32 @@ public class JdbcCommentRepository implements CommentRepository {
         return comment;
     }
 
+    @Override
+    public List<Comment> findCommentsByMusicId(long musicId) {
+        String sql = "select * from comment where music_id = :musicId";
+
+        return template.query(sql, getMusicIdMap(musicId), getCommentRowMapper());
+    }
+
+    private Map<String, Object> getMusicIdMap(long musicId) {
+        return Map.of("musicId", musicId);
+    }
+
     private MapSqlParameterSource getParameterSource(Comment comment) {
         return new MapSqlParameterSource()
                 .addValue("musicId", comment.getMusicId())
                 .addValue("description", comment.getDescription())
                 .addValue("createdDatetime", comment.getCreatedDatetime())
                 .addValue("updatedDatetime", comment.getUpdatedDatetime());
+    }
+
+    private RowMapper<Comment> getCommentRowMapper() {
+        return ((resultSet, rowNum) -> Comment.builder()
+                .id(resultSet.getLong("id"))
+                .musicId(resultSet.getLong("music_id"))
+                .description(resultSet.getString("description"))
+                .createdDatetime(resultSet.getTimestamp("created_datetime").toLocalDateTime())
+                .updatedDatetime(resultSet.getTimestamp("updated_datetime").toLocalDateTime())
+                .build());
     }
 }

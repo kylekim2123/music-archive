@@ -56,6 +56,12 @@ public class MusicService {
         return CommentResponse.fromEntity(comment);
     }
 
+    public List<CommentResponse> findCommentsByMusicId(long musicId) {
+        return commentRepository.findCommentsByMusicId(musicId).stream()
+                .map(CommentResponse::fromEntity)
+                .toList();
+    }
+
     private Music getMusicOrThrow(long musicId) {
         return musicRepository.findMusicById(musicId)
                 .orElseThrow(() -> new IllegalArgumentException("ID에 해당하는 음악이 없습니다."));
