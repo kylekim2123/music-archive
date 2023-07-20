@@ -3,7 +3,9 @@ package com.programmers.musicapp.repository;
 import com.programmers.musicapp.entity.Comment;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import javax.sql.DataSource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -35,12 +37,31 @@ public class JdbcCommentRepository implements CommentRepository {
     @Override
     public List<Comment> findCommentsByMusicId(long musicId) {
         String sql = "select * from comment where music_id = :musicId";
+        Map<String, Object> parameterSource = Map.of("musicId", musicId);
 
-        return template.query(sql, getMusicIdMap(musicId), getCommentRowMapper());
+        return template.query(sql, parameterSource, getCommentRowMapper());
     }
 
-    private Map<String, Object> getMusicIdMap(long musicId) {
-        return Map.of("musicId", musicId);
+    @Override
+    public Optional<Comment> findCommentById(long commentId) {
+        String sql = "select * from comment where id = :commentId";
+        Map<String, Object> parameterSource = Map.of("commentId", commentId);
+
+        try {
+            Comment comment = template.queryForObject(sql, parameterSource, getCommentRowMapper());
+
+            return Optional.of(comment);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public void deleteById(long commentId) {
+        String sql = "delete from comment where id = :commentId";
+        Map<String, Object> parameterSource = Map.of("commentId", commentId);
+
+        template.update(sql, parameterSource);
     }
 
     private MapSqlParameterSource getParameterSource(Comment comment) {

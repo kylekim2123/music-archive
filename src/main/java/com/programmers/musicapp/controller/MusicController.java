@@ -79,4 +79,10 @@ public class MusicController {
 
         return ResponseWrapper.of(OK.value(), "success", response);
     }
+
+    @DeleteMapping("/{musicId}/comments/{commentId}")
+    @ResponseStatus(NO_CONTENT)
+    public void deleteCommentById(@PathVariable long commentId) {
+        musicService.deleteCommentById(commentId);
+    }
 }

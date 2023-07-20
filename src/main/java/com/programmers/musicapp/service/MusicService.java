@@ -62,6 +62,13 @@ public class MusicService {
                 .toList();
     }
 
+    public void deleteCommentById(long commentId) {
+        commentRepository.findCommentById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("ID에 해당하는 댓글이 없습니다."));
+
+        commentRepository.deleteById(commentId);
+    }
+
     private Music getMusicOrThrow(long musicId) {
         return musicRepository.findMusicById(musicId)
                 .orElseThrow(() -> new IllegalArgumentException("ID에 해당하는 음악이 없습니다."));
