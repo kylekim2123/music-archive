@@ -32,8 +32,8 @@ public class MusicController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ResponseWrapper<MusicResponse> create(@RequestBody MusicCreateRequest request) {
-        MusicResponse response = musicService.create(request);
+    public ResponseWrapper<MusicResponse> createMusic(@RequestBody MusicCreateRequest request) {
+        MusicResponse response = musicService.createMusic(request);
 
         return ResponseWrapper.of(CREATED.value(), "success", response);
     }
@@ -53,16 +53,16 @@ public class MusicController {
     }
 
     @PutMapping("/{musicId}")
-    public ResponseWrapper<MusicResponse> update(@PathVariable long musicId, @RequestBody MusicUpdateRequest request) {
-        MusicResponse response = musicService.update(musicId, request);
+    public ResponseWrapper<MusicResponse> updateMusic(@PathVariable long musicId, @RequestBody MusicUpdateRequest request) {
+        MusicResponse response = musicService.updateMusic(musicId, request);
 
         return ResponseWrapper.of(OK.value(), "success", response);
     }
 
     @DeleteMapping("/{musicId}")
     @ResponseStatus(NO_CONTENT)
-    public void deleteById(@PathVariable long musicId) {
-        musicService.deleteById(musicId);
+    public void deleteMusicById(@PathVariable long musicId) {
+        musicService.deleteMusicById(musicId);
     }
 
     @PostMapping("/{musicId}/comments")

@@ -20,7 +20,7 @@ public class MusicService {
     private final MusicRepository musicRepository;
     private final CommentRepository commentRepository;
 
-    public MusicResponse create(MusicCreateRequest request) {
+    public MusicResponse createMusic(MusicCreateRequest request) {
         Music music = musicRepository.save(request.toEntity());
 
         return MusicResponse.fromEntity(music);
@@ -38,14 +38,14 @@ public class MusicService {
         return MusicResponse.fromEntity(music);
     }
 
-    public MusicResponse update(long musicId, MusicUpdateRequest request) {
+    public MusicResponse updateMusic(long musicId, MusicUpdateRequest request) {
         Music music = getMusicOrThrow(musicId);
         Music updatedMusic = musicRepository.update(request.toEntity(musicId, music.getCreatedDatetime()));
 
         return MusicResponse.fromEntity(updatedMusic);
     }
 
-    public void deleteById(long musicId) {
+    public void deleteMusicById(long musicId) {
         getMusicOrThrow(musicId);
         musicRepository.deleteById(musicId);
     }
