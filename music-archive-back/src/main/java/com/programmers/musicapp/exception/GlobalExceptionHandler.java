@@ -1,6 +1,7 @@
 package com.programmers.musicapp.exception;
 
 import static com.programmers.musicapp.exception.ExceptionRule.BAD_REQUEST_400;
+import static com.programmers.musicapp.exception.ExceptionRule.INTERNAL_SERVER_ERROR_500;
 import static com.programmers.musicapp.exception.ExceptionRule.INVALID_RELEASED_DATE_FORMAT;
 import static com.programmers.musicapp.exception.ExceptionRule.METHOD_NOT_ALLOWED_405;
 import static com.programmers.musicapp.exception.ExceptionRule.NOT_FOUND_404;
@@ -76,6 +77,14 @@ public class GlobalExceptionHandler {
         ResponseWrapper<ErrorResponse> responseWrapper = wrapErrorResponse(response, rule.getStatus());
 
         return new ResponseEntity<>(responseWrapper, rule.getStatus());
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus
+    public ResponseWrapper<ErrorResponse> handleException(Exception e) {
+        ErrorResponse response = ErrorResponse.from(INTERNAL_SERVER_ERROR_500.getMessage());
+
+        return wrapErrorResponse(response, INTERNAL_SERVER_ERROR_500.getStatus());
     }
 
     private <T> ResponseWrapper<T> wrapErrorResponse(T response, HttpStatus status) {
