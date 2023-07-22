@@ -1,6 +1,7 @@
 package com.programmers.musicapp.dto.request;
 
 import com.programmers.musicapp.entity.Music;
+import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Getter;
@@ -10,10 +11,17 @@ import lombok.NoArgsConstructor;
 @Getter
 public class MusicCreateRequest {
 
+    @NotBlank(message = "음악 제목을 입력하세요.")
     private String title;
+
+    @NotBlank(message = "앨범 표지 URL을 입력하세요.")
     private String posterUrl;
+
     private String description;
+
+    @NotBlank(message = "아티스트 이름을 입력하세요.")
     private String artistName;
+
     private LocalDate releasedDate;
 
     public Music toEntity() {

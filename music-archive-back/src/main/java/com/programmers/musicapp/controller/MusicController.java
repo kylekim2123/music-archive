@@ -11,6 +11,7 @@ import com.programmers.musicapp.dto.response.CommentResponse;
 import com.programmers.musicapp.dto.response.MusicResponse;
 import com.programmers.musicapp.dto.response.ResponseWrapper;
 import com.programmers.musicapp.service.MusicService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,7 +33,7 @@ public class MusicController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ResponseWrapper<MusicResponse> createMusic(@RequestBody MusicCreateRequest request) {
+    public ResponseWrapper<MusicResponse> createMusic(@Valid @RequestBody MusicCreateRequest request) {
         MusicResponse response = musicService.createMusic(request);
 
         return ResponseWrapper.of(CREATED.value(), "success", response);
@@ -53,7 +54,7 @@ public class MusicController {
     }
 
     @PutMapping("/{musicId}")
-    public ResponseWrapper<MusicResponse> updateMusic(@PathVariable long musicId, @RequestBody MusicUpdateRequest request) {
+    public ResponseWrapper<MusicResponse> updateMusic(@PathVariable long musicId, @Valid @RequestBody MusicUpdateRequest request) {
         MusicResponse response = musicService.updateMusic(musicId, request);
 
         return ResponseWrapper.of(OK.value(), "success", response);
@@ -67,7 +68,7 @@ public class MusicController {
 
     @PostMapping("/{musicId}/comments")
     @ResponseStatus(CREATED)
-    public ResponseWrapper<CommentResponse> createComment(@PathVariable long musicId, @RequestBody CommentCreateRequest request) {
+    public ResponseWrapper<CommentResponse> createComment(@PathVariable long musicId, @Valid @RequestBody CommentCreateRequest request) {
         CommentResponse response = musicService.createComment(musicId, request);
 
         return ResponseWrapper.of(CREATED.value(), "success", response);
