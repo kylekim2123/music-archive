@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Slf4j
 @RestControllerAdvice
@@ -79,9 +80,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(responseWrapper, rule.getStatus());
     }
 
+    @ExceptionHandler(NoHandlerFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseWrapper<ErrorResponse> handleNoHandlerFoundException() {
+        ErrorResponse response = ErrorResponse.from(NOT_FOUND_404.getMessage());
+
+        return wrapErrorResponse(response, NOT_FOUND_404.getStatus());
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus
-    public ResponseWrapper<ErrorResponse> handleException(Exception e) {
+    public ResponseWrapper<ErrorResponse> handleException() {
         ErrorResponse response = ErrorResponse.from(INTERNAL_SERVER_ERROR_500.getMessage());
 
         return wrapErrorResponse(response, INTERNAL_SERVER_ERROR_500.getStatus());
