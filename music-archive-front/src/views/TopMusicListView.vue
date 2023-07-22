@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import TopMusicCard from "@/components/TopMusicCard.vue";
+import TopMusicCard from "@/components/music/TopMusicCard.vue";
 
 export default {
   name: "TopMusicList",

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import MusicCard from '@/components/MusicCard.vue'
+import MusicCard from '@/components/music/MusicCard.vue'
 
 export default {
   name: 'MusicListView',

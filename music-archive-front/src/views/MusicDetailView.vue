@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import CommentForm from "@/components/CommentForm.vue";
-import CommentItem from "@/components/CommentItem.vue";
+import CommentForm from "@/components/comment/CommentForm.vue";
+import CommentItem from "@/components/comment/CommentItem.vue";
 
 export default {
   name: "MusicDetailView",

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import MusicForm from '@/components/MusicForm.vue'
+import MusicForm from '@/components/music/MusicForm.vue'
 
 export default {
   name: "MusicUpdateView",
