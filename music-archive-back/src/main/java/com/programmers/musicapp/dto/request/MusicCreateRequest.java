@@ -1,5 +1,9 @@
 package com.programmers.musicapp.dto.request;
 
+import static com.programmers.musicapp.exception.ExceptionRule.EMPTY_MUSIC_ARTIST_NAME;
+import static com.programmers.musicapp.exception.ExceptionRule.EMPTY_MUSIC_POSTER_URL;
+import static com.programmers.musicapp.exception.ExceptionRule.EMPTY_MUSIC_TITLE;
+
 import com.programmers.musicapp.entity.Music;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
@@ -11,15 +15,15 @@ import lombok.NoArgsConstructor;
 @Getter
 public class MusicCreateRequest {
 
-    @NotBlank(message = "음악 제목을 입력하세요.")
+    @NotBlank(message = EMPTY_MUSIC_TITLE)
     private String title;
 
-    @NotBlank(message = "앨범 표지 URL을 입력하세요.")
+    @NotBlank(message = EMPTY_MUSIC_POSTER_URL)
     private String posterUrl;
 
     private String description;
 
-    @NotBlank(message = "아티스트 이름을 입력하세요.")
+    @NotBlank(message = EMPTY_MUSIC_ARTIST_NAME)
     private String artistName;
 
     private LocalDate releasedDate;

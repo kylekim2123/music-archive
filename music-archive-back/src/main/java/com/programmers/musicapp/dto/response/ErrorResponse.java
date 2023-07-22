@@ -7,10 +7,10 @@ import lombok.Getter;
 @Getter
 public class ErrorResponse {
 
-    private String message;
-    private String causeInput;
+    private String errorMessage;
+    private String rejectedValue;
 
-    public static ErrorResponse of(String message, String causeInput) {
-        return new ErrorResponse(message, causeInput);
+    public static ErrorResponse of(String errorMessage, String rejectedValue) {
+        return new ErrorResponse(errorMessage, rejectedValue);
     }
 }

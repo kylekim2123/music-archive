@@ -83,7 +83,7 @@ public class MusicController {
 
     @DeleteMapping("/{musicId}/comments/{commentId}")
     @ResponseStatus(NO_CONTENT)
-    public void deleteCommentById(@PathVariable long commentId) {
-        musicService.deleteCommentById(commentId);
+    public void deleteCommentById(@PathVariable long musicId, @PathVariable long commentId) {
+        musicService.deleteCommentById(musicId, commentId);
     }
 }
