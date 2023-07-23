@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="my-3 p-2 bg-info-subtle">
-      Today's Spotify Top 20
+      Today's Spotify Top 50
     </h3>
     <div class="row row-cols-1 row-cols-md-4 g-4">
       <MusicCard

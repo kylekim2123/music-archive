@@ -10,7 +10,7 @@ const routes = [
     redirect: { name: 'TopMusicListView' }
   },
   {
-    path: '/top-20-musics',
+    path: '/top-musics',
     name: 'TopMusicListView',
     component: () => import('@/views/TopMusicListView.vue'),
   },
