@@ -23,3 +23,4 @@ CREATE TABLE comment
     updated_datetime DATETIME DEFAULT NULL,
     FOREIGN KEY (music_id) REFERENCES music (id) ON DELETE CASCADE
 );
+
