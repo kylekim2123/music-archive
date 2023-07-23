@@ -18,6 +18,7 @@ public class Music {
     private String description;
     private String artistName;
     private LocalDate releasedDate;
+    private Boolean isSpotify;
     private LocalDateTime createdDatetime;
     private LocalDateTime updatedDatetime;
 }

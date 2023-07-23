@@ -36,6 +36,18 @@ public class MusicService {
                 .toList();
     }
 
+    public List<MusicResponse> findCustomMusics() {
+        return musicRepository.findCustomMusics().stream()
+                .map(MusicResponse::fromEntity)
+                .toList();
+    }
+
+    public List<MusicResponse> findTopMusics() {
+        return musicRepository.findTopMusics().stream()
+                .map(MusicResponse::fromEntity)
+                .toList();
+    }
+
     public MusicResponse findMusicById(long musicId) {
         Music music = getMusicOrThrow(musicId);
 

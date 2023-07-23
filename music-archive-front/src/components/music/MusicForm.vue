@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="my-4">음악 정보 {{ option.name }}</h3>
+    <h3 class="my-3 p-2 bg-info-subtle">음악 정보 {{ option.name }}</h3>
 
     <div class="form-floating mb-3">
       <input type="text" class="form-control" id="title" placeholder="title" v-model="newMusic.title">
@@ -48,6 +48,7 @@ export default {
         artistName: null,
         releasedDate: null,
         description: null,
+        isSpotify: false
       }
     }
   },

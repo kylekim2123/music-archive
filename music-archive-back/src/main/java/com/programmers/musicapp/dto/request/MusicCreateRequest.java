@@ -6,13 +6,14 @@ import static com.programmers.musicapp.exception.ExceptionRule.EMPTY_MUSIC_TITLE
 
 import com.programmers.musicapp.entity.Music;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @Getter
+@Builder
 public class MusicCreateRequest {
 
     @NotBlank(message = EMPTY_MUSIC_TITLE)
@@ -28,6 +29,9 @@ public class MusicCreateRequest {
 
     private LocalDate releasedDate;
 
+    @NotNull
+    private Boolean isSpotify;
+
     public Music toEntity() {
         LocalDateTime nowDateTime = LocalDateTime.now();
 
@@ -37,6 +41,7 @@ public class MusicCreateRequest {
                 .description(description)
                 .artistName(artistName)
                 .releasedDate(releasedDate)
+                .isSpotify(isSpotify)
                 .createdDatetime(nowDateTime)
                 .updatedDatetime(nowDateTime)
                 .build();

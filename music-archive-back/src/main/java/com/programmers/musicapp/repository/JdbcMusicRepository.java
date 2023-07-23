@@ -24,8 +24,8 @@ public class JdbcMusicRepository implements MusicRepository {
 
     @Override
     public Music save(Music music) {
-        String sql = "insert into music(title, poster_url, description, artist_name, released_date, created_datetime, updated_datetime) "
-                + "values (:title, :posterUrl, :description, :artistName, :releasedDate, :createdDatetime, :updatedDatetime)";
+        String sql = "insert into music(title, poster_url, description, artist_name, released_date, is_spotify, created_datetime, updated_datetime) "
+                + "values (:title, :posterUrl, :description, :artistName, :releasedDate, :isSpotify, :createdDatetime, :updatedDatetime)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         template.update(sql, getParameterSource(music), keyHolder);
@@ -37,6 +37,20 @@ public class JdbcMusicRepository implements MusicRepository {
     @Override
     public List<Music> findAllMusics() {
         String sql = "select * from music";
+
+        return template.query(sql, getMusicRowMapper());
+    }
+
+    @Override
+    public List<Music> findCustomMusics() {
+        String sql = "select * from music where is_spotify is FALSE";
+
+        return template.query(sql, getMusicRowMapper());
+    }
+
+    @Override
+    public List<Music> findTopMusics() {
+        String sql = "select * from music where is_spotify is TRUE";
 
         return template.query(sql, getMusicRowMapper());
     }
@@ -83,6 +97,7 @@ public class JdbcMusicRepository implements MusicRepository {
                 .addValue("description", music.getDescription())
                 .addValue("artistName", music.getArtistName())
                 .addValue("releasedDate", music.getReleasedDate())
+                .addValue("isSpotify", music.getIsSpotify())
                 .addValue("createdDatetime", music.getCreatedDatetime())
                 .addValue("updatedDatetime", music.getUpdatedDatetime());
     }
@@ -95,6 +110,7 @@ public class JdbcMusicRepository implements MusicRepository {
                 .description(resultSet.getString("description"))
                 .artistName(resultSet.getString("artist_name"))
                 .releasedDate(resultSet.getDate("released_date").toLocalDate())
+                .isSpotify(resultSet.getBoolean("is_spotify"))
                 .createdDatetime(resultSet.getTimestamp("created_datetime").toLocalDateTime())
                 .updatedDatetime(resultSet.getTimestamp("updated_datetime").toLocalDateTime())
                 .build());

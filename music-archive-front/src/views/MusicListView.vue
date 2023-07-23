@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h3 class="my-4">
-      사용자가 직접 추가한 음악 목록
+    <h3 class="my-3 p-2 bg-info-subtle">
+      내 음악 목록
     </h3>
-    <div class="row row-cols-1 row-cols-md-4 g-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
       <MusicCard
-          v-for="(music, idx) in getAllMusics"
+          v-for="(music, idx) in getUserMusics"
           :key="`music-${idx}`"
           :music="music"
           class="heartbeat"
@@ -23,12 +23,12 @@ export default {
     MusicCard,
   },
   computed: {
-    getAllMusics() {
-      return this.$store.state.musics
+    getUserMusics() {
+      return this.$store.state.userMusics
     }
   },
   created() {
-    this.$store.dispatch('findAllMusics')
+    this.$store.dispatch('findUserMusics')
   },
 }
 </script>

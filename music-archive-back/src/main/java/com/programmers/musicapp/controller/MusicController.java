@@ -46,6 +46,20 @@ public class MusicController {
         return ResponseWrapper.of(OK.value(), "success", response);
     }
 
+    @GetMapping("/custom")
+    public ResponseWrapper<List<MusicResponse>> findCustomMusics() {
+        List<MusicResponse> response = musicService.findCustomMusics();
+
+        return ResponseWrapper.of(OK.value(), "success", response);
+    }
+
+    @GetMapping("/top")
+    public ResponseWrapper<List<MusicResponse>> findTopMusics() {
+        List<MusicResponse> response = musicService.findTopMusics();
+
+        return ResponseWrapper.of(OK.value(), "success", response);
+    }
+
     @GetMapping("/{musicId}")
     public ResponseWrapper<MusicResponse> findMusicById(@PathVariable long musicId) {
         MusicResponse response = musicService.findMusicById(musicId);

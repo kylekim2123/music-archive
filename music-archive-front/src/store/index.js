@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import qs from 'qs';
 import router from "@/router";
 
 import createPersistedState from "vuex-persistedstate";
@@ -19,20 +18,22 @@ export default new Vuex.Store({
   state: {
     status: "",
     message: "",
-    spotifyTop20Musics: [],
-    musics: [],
+    topMusics: [],
+    userMusics: [],
     music: {},
     comments: []
   },
   getters: {},
   mutations: {
-    'SET_SPOTIFY_TOP_20_MUSICS'(state, spotifyTopMusics) {
-      state.spotifyTop20Musics = spotifyTopMusics
-    },
-    'SET_MUSIC_LIST'(state, {status, message, data}) {
+    'SET_TOP_MUSIC_LIST'(state, {status, message, data}) {
       state.status = status
       state.message = message
-      state.musics = data
+      state.topMusics = data
+    },
+    'SET_USER_MUSIC_LIST'(state, {status, message, data}) {
+      state.status = status
+      state.message = message
+      state.userMusics = data
     },
     'SET_MUSIC'(state, {status, message, data}) {
       state.status = status
@@ -51,60 +52,21 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    fetchSpotifyTopMusics({dispatch}) {
-      const data = {
-        grant_type: 'client_credentials',
-        client_id: process.env.VUE_APP_SPOTIFY_CLIENT_ID,
-        client_secret: process.env.VUE_APP_SPOTIFY_CLIENT_SECRET,
-      };
-
-      axios({
-        method: 'post',
-        url: 'https://accounts.spotify.com/api/token',
-        data: qs.stringify(data),
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      })
-      .then(response => {
-        dispatch('fetchSpotifyGlobalTop50Tracks', response.data.access_token)
-      })
-    },
-    fetchSpotifyGlobalTop50Tracks({dispatch}, token) {
+    findTopMusics({commit}) {
       axios({
         method: 'get',
-        url: 'https://api.spotify.com/v1/playlists/37i9dQZEVXbMDoHDwVN2tF',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then(response => {
-        dispatch('setSpotifyTopMusics', response.data.tracks.items.slice(0, 20))
-      })
-    },
-    setSpotifyTopMusics({commit}, topMusics) {
-      const spotifyTopMusics = []
-
-      for (const topMusic of topMusics) {
-        const title = topMusic.track.name
-        const posterUrl = topMusic.track.album.images[0].url
-        const artistName = topMusic.track.artists[0].name
-        const releasedDate = topMusic.track.album.release_date
-
-        spotifyTopMusics.push({title, posterUrl, artistName, releasedDate})
-      }
-
-      commit('SET_SPOTIFY_TOP_20_MUSICS', spotifyTopMusics)
-    },
-    findAllMusics({commit}) {
-      axios({
-        method: 'get',
-        url: `${BASE_URL}/musics`,
+        url: `${BASE_URL}/musics/top`,
         params: params
       })
-      .then(response => commit('SET_MUSIC_LIST', response.data))
+      .then(response => commit('SET_TOP_MUSIC_LIST', response.data))
+    },
+    findUserMusics({commit}) {
+      axios({
+        method: 'get',
+        url: `${BASE_URL}/musics/custom`,
+        params: params
+      })
+      .then(response => commit('SET_USER_MUSIC_LIST', response.data))
     },
     findMusicById({commit}, musicId) {
       axios({
@@ -136,13 +98,19 @@ export default new Vuex.Store({
       .then(() => router.push(
           {name: "MusicDetailView", params: {musicId: musicId}}))
     },
-    deleteMusic(context, musicId) {
+    deleteMusic(context, {musicId, isSpotify}) {
       axios({
         method: 'delete',
         url: `${BASE_URL}/musics/${musicId}`,
         params: params,
       })
-      .then(() => router.push({name: "MusicListView"}))
+      .then(() => {
+        if (isSpotify) {
+          router.push({name: "TopMusicListView"})
+        } else {
+          router.push({name: "MusicListView"})
+        }
+      })
     },
     createComment({commit}, {musicId, description}) {
       axios({

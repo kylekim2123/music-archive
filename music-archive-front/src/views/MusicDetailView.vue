@@ -1,9 +1,9 @@
 <template>
-  <div class="mt-5">
-    <div class="row justify-content-center">
-      <div class="col-sm-12 col-md-6 d-flex justify-content-around mb-5">
-        <img :src="getPosterUrl" alt="album_poster">
-        <div class="d-flex flex-column justify-content-between">
+  <div class="d-flex justify-content-center">
+    <div>
+      <div class="d-flex mb-5">
+        <img :src="getPosterUrl" alt="album_poster" style="width: 200px; height: 200px; border: 1px solid black;">
+        <div class="d-flex flex-column justify-content-between ms-5">
           <h3>{{ getMusic.title }}</h3>
           <p>
             <strong>{{ getMusic.description }}</strong>
@@ -16,10 +16,8 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="row justify-content-center">
-      <div class="col-sm-12 col-md-5">
+      <div>
         <CommentForm :musicId="musicId" />
         <ul class="list-group list-group-flush">
           <CommentItem
@@ -58,7 +56,7 @@ export default {
   },
   methods: {
     deleteMusic() {
-      this.$store.dispatch('deleteMusic', this.musicId)
+      this.$store.dispatch('deleteMusic', {musicId: this.musicId, isSpotify: this.getMusic.isSpotify})
     }
   },
   created() {

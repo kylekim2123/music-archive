@@ -16,6 +16,7 @@ public class MusicResponse {
     private String description;
     private String artistName;
     private LocalDate releasedDate;
+    private Boolean isSpotify;
     private LocalDateTime createdDatetime;
     private LocalDateTime updatedDatetime;
 
@@ -27,6 +28,7 @@ public class MusicResponse {
                 .description(music.getDescription())
                 .artistName(music.getArtistName())
                 .releasedDate(music.getReleasedDate())
+                .isSpotify(music.getIsSpotify())
                 .createdDatetime(music.getCreatedDatetime())
                 .updatedDatetime(music.getUpdatedDatetime())
                 .build();

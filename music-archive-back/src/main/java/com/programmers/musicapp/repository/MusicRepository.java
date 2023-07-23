@@ -10,6 +10,10 @@ public interface MusicRepository {
 
     List<Music> findAllMusics();
 
+    List<Music> findCustomMusics();
+
+    List<Music> findTopMusics();
+
     Optional<Music> findMusicById(long musicId);
 
     Music update(Music music);

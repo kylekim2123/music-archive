@@ -1,9 +1,11 @@
 <template>
   <div>
-    <h3 class="my-4">오늘의 Spotify Top 20</h3>
+    <h3 class="my-3 p-2 bg-info-subtle">
+      Today's Spotify Top 20
+    </h3>
     <div class="row row-cols-1 row-cols-md-4 g-4">
-      <TopMusicCard
-          v-for="(music, idx) in getSpotifyTop20Musics"
+      <MusicCard
+          v-for="(music, idx) in getTopMusics"
           :key="`top-music-${idx}`"
           :music="music"
           class="heartbeat"
@@ -13,20 +15,20 @@
 </template>
 
 <script>
-import TopMusicCard from "@/components/music/TopMusicCard.vue";
+import MusicCard from "@/components/music/MusicCard.vue";
 
 export default {
   name: "TopMusicList",
   components: {
-    TopMusicCard
+    MusicCard
   },
   computed: {
-    getSpotifyTop20Musics() {
-      return this.$store.state.spotifyTop20Musics
+    getTopMusics() {
+      return this.$store.state.topMusics
     }
   },
   created() {
-    this.$store.dispatch('fetchSpotifyTopMusics')
+    this.$store.dispatch('findTopMusics')
   }
 }
 </script>

@@ -4,6 +4,7 @@
 .idea
 .vscode
 .DS_Store
+src/**/application-API-KEY.properties
 
 ### Java ###
 # Compiled class file

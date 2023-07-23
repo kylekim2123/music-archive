@@ -5,10 +5,6 @@
 
       <div class="card-body">
         <h4 class="card-title fw-bold">{{ music.title }}</h4>
-        <hr>
-        <p class="card-text">
-          <strong>{{ music.description }}</strong>
-        </p>
       </div>
 
       <div class="card-footer">

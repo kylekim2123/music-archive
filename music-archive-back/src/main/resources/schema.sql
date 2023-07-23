@@ -9,6 +9,7 @@ CREATE TABLE music
     description      VARCHAR(500) NOT NULL,
     artist_name      VARCHAR(50)  NOT NULL,
     released_date    DATE         NOT NULL,
+    is_spotify       BOOLEAN  DEFAULT FALSE,
     created_datetime DATETIME DEFAULT NULL,
     updated_datetime DATETIME DEFAULT NULL
 );

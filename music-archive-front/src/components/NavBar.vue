@@ -7,9 +7,9 @@
       </h2>
     </router-link>
     <div>
-      <router-link :to="{ name: 'TopMusicListView' }">Today's Top 20</router-link>
+      <router-link :to="{ name: 'TopMusicListView' }">오늘의 추천</router-link>
       <span class="mx-3 text-white-50">|</span>
-      <router-link :to="{ name: 'MusicListView' }">음악 목록</router-link>
+      <router-link :to="{ name: 'MusicListView' }">내 음악 목록</router-link>
       <span class="mx-3 text-white-50">|</span>
       <router-link :to="{ name: 'MusicCreateView' }">새 음악 추가</router-link>
     </div>
